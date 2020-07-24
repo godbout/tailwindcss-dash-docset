@@ -12,14 +12,4 @@
 
 ___
 
-## Docsets born here, sorted by eldest first
-
-* [Laravel-Zero](https://laravel-zero.com/docs/introduction/)
-* [Jigsaw by Tighten](https://jigsaw.tighten.co/docs/installation/)
-* [Tailwind CSS](https://tailwindcss.com/docs/installation/)
-* [Tiki](https://doc.tiki.org/All-the-Documentation)
-* ~~[Stripe](https://stripe.com/docs)~~ — [DECEASED](https://github.com/godbout/dash-docset-builder/tree/stripe/storage/stripe)
-* ~~[Stripe API](https://stripe.com/docs/api)~~ — [DECEASED](https://github.com/godbout/dash-docset-builder/tree/stripe-api/storage/stripe-api)
-* [Ploi API](https://developers.ploi.io/)
-* [Bulma](https://https://bulma.io/)
-* [Alfred 4](https://www.alfredapp.com/)
+(GIF needed)
