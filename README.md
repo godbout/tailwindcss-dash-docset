@@ -7,9 +7,12 @@
 </p>
 
 <p align="center">
-    TailwindCSS <a href="https://kapeli.com/dash">Dash</a> <a href="https://kapeli.com/docsets">Docsets</a> created with the lovely—not biased here—<a href="https://github.com/godbout/dash-docset-builder">Dash Docset Builder</a> in PHP.
+    <a href="https://tailwindcss.com/">TailwindCSS</a> <a href="https://kapeli.com/dash">Dash</a> <a href="https://kapeli.com/docsets">Docsets</a> created with the lovely—not biased here—<a href="https://github.com/godbout/dash-docset-builder">Dash Docset Builder</a> in PHP.
 </p>
 
 ___
 
-(GIF needed)
+<br>
+<p align="center">
+    <img src="https://github.com/godbout/tailwindcss-dash-docset/blob/media/tailwindcss-dash-docset.gif" alt="TailwindCSS for Dash">
+</p>
