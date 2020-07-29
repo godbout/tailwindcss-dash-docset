@@ -4,8 +4,18 @@
         <description><![CDATA[Blog – Tailwind CSS]]></description>
         <link>https://blog.tailwindcss.com</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Sun, 19 Jul 2020 20:48:21 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 28 Jul 2020 17:09:18 GMT</lastBuildDate>
         <atom:link href="https://blog.tailwindcss.com/feed.xml" rel="self" type="application/rss+xml"/>
+        <item>
+            <title><![CDATA[Tailwind CSS v1.6.0]]></title>
+            <description><![CDATA[Tailwind CSS v1.6.0 is now available, with animations and more!]]></description>
+            <link>https://blog.tailwindcss.com/tailwindcss-1-6</link>
+            <guid isPermaLink="false">/tailwindcss-1-6</guid>
+            <pubDate>Tue, 28 Jul 2020 16:58:33 GMT</pubDate>
+            <author>
+                <name>Adam Wathan</name>
+            </author>
+        </item>
         <item>
             <title><![CDATA[Simon Vrachliotis Joins Tailwind Labs]]></title>
             <description><![CDATA[Today we are super excited to share that Simon Vrachliotis has joined the development team at Tailwind Labs.]]></description>

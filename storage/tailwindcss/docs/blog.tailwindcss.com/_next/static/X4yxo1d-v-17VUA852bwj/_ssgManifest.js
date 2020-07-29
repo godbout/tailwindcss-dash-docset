@@ -1,0 +1,1 @@
+self.__SSG_MANIFEST=new Set(["\u002Ftailwindcss-1-5","\u002Fwelcoming-brad-cornes-to-the-tailwind-team","\u002Fbuilding-the-tailwind-blog","\u002Ftailwindcss-1-6","\u002Ftailwindcss-typography","\u002Fsimon-vrachliotis-joins-tailwind-labs","\u002Fintroducing-linting-for-tailwindcss-intellisense"]);self.__SSG_MANIFEST_CB&&self.__SSG_MANIFEST_CB()
