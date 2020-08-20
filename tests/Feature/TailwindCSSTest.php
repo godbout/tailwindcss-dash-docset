@@ -97,12 +97,12 @@ class TailwindCSSTest extends TestCase
 
         $this->assertStringContainsString(
             $tailwindUIAlert,
-            Storage::get($this->docset->downloadedDirectory() . '/' . $this->docset->url() . '/components/buttons/index.html')
+            Storage::get($this->docset->downloadedDirectory() . '/' . $this->docset->url() . '/components/buttons.html')
         );
 
         $this->assertStringNotContainsString(
             $tailwindUIAlert,
-            Storage::get($this->docset->innerDirectory() . '/' . $this->docset->url() . '/components/buttons/index.html')
+            Storage::get($this->docset->innerDirectory() . '/' . $this->docset->url() . '/components/buttons.html')
         );
     }
 
@@ -113,12 +113,12 @@ class TailwindCSSTest extends TestCase
 
         $this->assertStringNotContainsString(
             $ignoreDarkMode,
-            Storage::get($this->docset->downloadedDirectory() . '/' . $this->docset->url() . '/docs/background-color/index.html')
+            Storage::get($this->docset->downloadedDirectory() . '/' . $this->docset->url() . '/docs/background-color.html')
         );
 
         $this->assertStringContainsString(
             $ignoreDarkMode,
-            Storage::get($this->docset->innerDirectory() . '/' . $this->docset->url() . '/docs/background-color/index.html')
+            Storage::get($this->docset->innerDirectory() . '/' . $this->docset->url() . '/docs/background-color.html')
         );
     }
 
