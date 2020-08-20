@@ -14,7 +14,7 @@ class TailwindCSS extends BaseDocset
     public const CODE = 'tailwindcss';
     public const NAME = 'Tailwind CSS';
     public const URL = 'tailwindcss.com';
-    public const INDEX = 'docs/installation/index.html';
+    public const INDEX = 'docs/installation.html';
     public const PLAYGROUND = 'https://codesandbox.io/s/github/lbogdan/tailwindcss-playground';
     public const ICON_16 = 'favicon-16x16.png';
     public const ICON_32 = 'favicon-32x32.png';
@@ -47,7 +47,7 @@ class TailwindCSS extends BaseDocset
     {
         $entries = collect();
 
-        if (Str::contains($file, "{$this->url()}/community/index.html")) {
+        if (Str::contains($file, "{$this->url()}/community.html")) {
             $crawler->filter('h2')->each(function (HtmlPageCrawler $node) use ($entries, $file) {
                 $entries->push([
                     'name' => $this->cleanAnchorText($node->text()),
@@ -64,7 +64,7 @@ class TailwindCSS extends BaseDocset
     {
         $entries = collect();
 
-        if (Str::contains($file, "{$this->url()}/screencasts/index.html")) {
+        if (Str::contains($file, "{$this->url()}/screencasts.html")) {
             $crawler->filter('span.relative')->each(function (HtmlPageCrawler $node) use ($entries) {
                 $entries->push([
                     'name' => $this->cleanAnchorText($node->text()),
@@ -81,12 +81,13 @@ class TailwindCSS extends BaseDocset
     {
         $entries = collect();
 
-        if (Str::contains($file, "{$this->url()}/components/index.html")) {
+        if (Str::contains($file, "{$this->url()}/components.html")) {
             $crawler->filter('span.relative')->each(function (HtmlPageCrawler $node) use ($entries) {
+                var_dump($this->url() . '/' . $node->parents()->first()->attr('href'));
                 $entries->push([
                     'name' => $this->cleanAnchorText($node->text()),
                     'type' => 'Sample',
-                    'path' => $this->url() . '/components/' . $node->parents()->first()->attr('href'),
+                    'path' => $this->url() . '/' . $node->parents()->first()->attr('href'),
                 ]);
             });
 
@@ -98,7 +99,7 @@ class TailwindCSS extends BaseDocset
     {
         $entries = collect();
 
-        if (Str::contains($file, "{$this->url()}/resources/index.html")) {
+        if (Str::contains($file, "{$this->url()}/resources.html")) {
             $crawler->filter('h2')->each(function (HtmlPageCrawler $node) use ($entries, $file) {
                 $entries->push([
                     'name' => $this->cleanAnchorText($node->text()),
