@@ -19,13 +19,34 @@ class TailwindCSS extends BaseDocset
     public const ICON_16 = 'favicon-16x16.png';
     public const ICON_32 = 'favicon-32x32.png';
     public const EXTERNAL_DOMAINS = [
-        'refactoring-ui.nyc3.cdn.digitaloceanspaces.com',
-        'jsdelivr.net',
-        'code.jquery.com',
-        'rsms.me',
-        'googleapis.com',
-        // 'images.unsplash.com'
     ];
+
+
+    public function grab(): bool
+    {
+        $toIgnore = implode('|', [
+            'blog.tailwindcss.com',
+        ]);
+
+        system(
+            "echo; wget tailwindcss.com/docs \
+                --mirror \
+                --trust-server-names \
+                --reject-regex='{$toIgnore}' \
+                --page-requisites \
+                --adjust-extension \
+                --convert-links \
+                --span-hosts \
+                --domains={$this->externalDomains()} \
+                --directory-prefix=storage/{$this->downloadedDirectory()} \
+                -e robots=off \
+                --quiet \
+                --show-progress",
+            $result
+        );
+
+        return $result === 0;
+    }
 
     public function entries(string $file): Collection
     {
