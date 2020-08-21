@@ -209,7 +209,7 @@ class TailwindCSS extends BaseDocset
 
     protected function removeTailwindUIAlert(HtmlPageCrawler $crawler)
     {
-        $crawler->filter('body > div.transition.transform.fixed.z-100')->remove();
+        $crawler->filter('div.transition.transform.fixed.z-100')->remove();
     }
 
     protected function removeUnwantedCSS(HtmlPageCrawler $crawler)
