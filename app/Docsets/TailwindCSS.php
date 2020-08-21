@@ -194,7 +194,7 @@ class TailwindCSS extends BaseDocset
 
     protected function removeNavbarAndHeader(HtmlPageCrawler $crawler)
     {
-        $crawler->filter('body > div:first-child')->remove();
+        $crawler->filter('#header')->remove();
     }
 
     protected function removeLeftSidebar(HtmlPageCrawler $crawler)
