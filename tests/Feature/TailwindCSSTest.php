@@ -130,7 +130,7 @@ class TailwindCSSTest extends TestCase
         );
 
         $this->assertTrue(
-            $crawler->filter('body > div:nth-child(2)')->hasClass('max-w-screen-xl')
+            $crawler->filter('#__next > div:nth-child(2)')->hasClass('max-w-screen-xl')
         );
 
 
@@ -139,7 +139,7 @@ class TailwindCSSTest extends TestCase
         );
 
         $this->assertFalse(
-            $crawler->filter('body > div:nth-child(2)')->hasClass('max-w-screen-xl')
+            $crawler->filter('#__next > div:nth-child(2)')->hasClass('max-w-screen-xl')
         );
     }
 
