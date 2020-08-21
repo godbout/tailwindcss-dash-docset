@@ -274,11 +274,10 @@ class TailwindCSS extends BaseDocset
     protected function updateTopPadding(HtmlPageCrawler $crawler)
     {
         $crawler->filter('#app > div')
-            ->removeClass('pt-12')
             ->removeClass('pt-24')
+            ->addClass('pt-12')
             ->removeClass('pb-16')
             ->removeClass('lg:pt-28')
-            ->removeClass('lg:pt-12')
         ;
     }
 
@@ -296,7 +295,7 @@ class TailwindCSS extends BaseDocset
 
     protected function updateContainerWidth(HtmlPageCrawler $crawler)
     {
-        $crawler->filter('body > div:first-child')
+        $crawler->filter('#__next > div:nth-child(2)')
             ->removeClass('max-w-screen-xl');
 
         $crawler->filter('#content-wrapper')
@@ -304,7 +303,8 @@ class TailwindCSS extends BaseDocset
             ->removeClass('lg:max-h-full')
             ->removeClass('lg:overflow-visible')
             ->removeClass('lg:w-3/4')
-            ->removeClass('xl:w-4/5');
+            ->removeClass('xl:w-4/5')
+        ;
 
         $crawler->filter('#app > div > div.flex > div.markdown')
             ->removeClass('xl:p-12')
@@ -313,7 +313,8 @@ class TailwindCSS extends BaseDocset
             ->removeClass('lg:mr-auto')
             ->removeClass('xl:w-3/4')
             ->removeClass('xl:px-12')
-            ->removeClass('xl:mx-0');
+            ->removeClass('xl:mx-0')
+        ;
     }
 
     protected function updateBottomPadding(HtmlPageCrawler $crawler)
