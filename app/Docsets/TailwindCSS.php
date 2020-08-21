@@ -245,12 +245,12 @@ class TailwindCSS extends BaseDocset
 
     protected function ignoreDarkModeForBackgroundColorTable(HtmlPageCrawler $crawler)
     {
-        $crawler->filter('h2 + div td.w-24.p-2.font-mono.text-xs')->addClass('dash-ignore-dark-mode');
+        $crawler->filter('h2 + div td.w-24')->addClass('dash-ignore-dark-mode');
     }
 
     protected function ignoreDarkModeForTextColorAndPlaceholderColorTables(HtmlPageCrawler $crawler)
     {
-        $crawler->filter('h2 + div td.relative.w-16.font-medium.border-t.text-base')->addClass('dash-ignore-dark-mode');
+        $crawler->filter('h2 + div td.w-16.font-medium')->addClass('dash-ignore-dark-mode');
     }
 
     protected function ignoreDarkModeForBorderColorTable(HtmlPageCrawler $crawler)
@@ -260,7 +260,7 @@ class TailwindCSS extends BaseDocset
 
     protected function ignoreDarkModeForDivideColorTable(HtmlPageCrawler $crawler)
     {
-        $crawler->filter('h2 + div td > div.absolute.m-2.divide-y')->addClass('dash-ignore-dark-mode');
+        $crawler->filter('h2 + div td > div.absolute.m-2')->addClass('dash-ignore-dark-mode');
     }
 
     protected function updateCSS(HtmlPageCrawler $crawler)
