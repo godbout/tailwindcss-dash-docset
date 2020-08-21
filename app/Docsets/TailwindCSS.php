@@ -104,7 +104,6 @@ class TailwindCSS extends BaseDocset
 
         if (Str::contains($file, "{$this->url()}/components.html")) {
             $crawler->filter('span.relative')->each(function (HtmlPageCrawler $node) use ($entries) {
-                var_dump($this->url() . '/' . $node->parents()->first()->attr('href'));
                 $entries->push([
                     'name' => $this->cleanAnchorText($node->text()),
                     'type' => 'Sample',
@@ -183,7 +182,6 @@ class TailwindCSS extends BaseDocset
         $this->removeLeftSidebar($crawler);
         $this->removeRightSidebar($crawler);
         $this->removeTailwindUIAlert($crawler);
-        $this->removeUnwantedCSS($crawler);
         $this->removeUnwantedJavaScript($crawler);
         $this->ignoreDarkModeForSomeColors($crawler);
         $this->updateCSS($crawler);
@@ -212,21 +210,9 @@ class TailwindCSS extends BaseDocset
         $crawler->filter('div.transition.transform.fixed.z-100')->remove();
     }
 
-    protected function removeUnwantedCSS(HtmlPageCrawler $crawler)
-    {
-        $crawler->filter('link[href*="docsearch.min.css"]')->remove();
-    }
-
     protected function removeUnwantedJavaScript(HtmlPageCrawler $crawler)
     {
-        $crawler->filter('script[src*=analytics]')->remove();
-        $crawler->filter('script[src*=docsearch]')->remove();
-        $crawler->filter('script[src*=gtag]')->remove();
-        $crawler->filterXPath("//script[text()[contains(.,'docsearch')]]")->remove();
-        $crawler->filterXPath("//script[text()[contains(.,'gtag')]]")->remove();
-        $crawler->filter('script[src*=jquery]')
-            ->removeAttribute('integrity')
-            ->removeAttribute('crossorigin');
+        $crawler->filter('script')->remove();
     }
 
     protected function ignoreDarkModeForSomeColors(HtmlPageCrawler $crawler)
