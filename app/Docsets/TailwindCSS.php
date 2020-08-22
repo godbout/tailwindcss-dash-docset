@@ -54,12 +54,12 @@ class TailwindCSS extends BaseDocset
 
         $entries = collect();
 
-        $entries = $entries->merge($this->environmentEntries($crawler, $file));
-        $entries = $entries->merge($this->instructionEntries($crawler, $file));
-        $entries = $entries->merge($this->sampleEntries($crawler, $file));
-        $entries = $entries->merge($this->resourceEntries($crawler, $file));
-        $entries = $entries->merge($this->guideEntries($crawler, $file));
-        $entries = $entries->merge($this->sectionEntries($crawler, $file));
+        $entries = $entries->union($this->environmentEntries($crawler, $file));
+        $entries = $entries->union($this->instructionEntries($crawler, $file));
+        $entries = $entries->union($this->sampleEntries($crawler, $file));
+        $entries = $entries->union($this->resourceEntries($crawler, $file));
+        $entries = $entries->union($this->guideEntries($crawler, $file));
+        $entries = $entries->union($this->sectionEntries($crawler, $file));
 
         return $entries;
     }
