@@ -1,1 +1,0 @@
-self.__SSG_MANIFEST=new Set(["\u002Ftailwindcss-typography","\u002Ftailwindcss-1-5","\u002Fintroducing-linting-for-tailwindcss-intellisense","\u002Fwelcoming-brad-cornes-to-the-tailwind-team","\u002Fsimon-vrachliotis-joins-tailwind-labs","\u002Fbuilding-the-tailwind-blog"]);self.__SSG_MANIFEST_CB&&self.__SSG_MANIFEST_CB()
