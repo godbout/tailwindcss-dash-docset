@@ -261,9 +261,10 @@ class TailwindCSS extends BaseDocset
     {
         $crawler->filter('#app > div')
             ->removeClass('pt-24')
-            ->addClass('pt-12')
+            ->addClass('pt-8')
             ->removeClass('pb-16')
             ->removeClass('lg:pt-28')
+            ->addClass('px-4')
         ;
     }
 
@@ -306,12 +307,12 @@ class TailwindCSS extends BaseDocset
     protected function updateBottomPadding(HtmlPageCrawler $crawler)
     {
         $crawler->filter('body')
-            ->addClass('pb-8');
+            ->addClass('pb-16');
     }
 
     protected function insertDashTableOfContents(HtmlPageCrawler $crawler)
     {
-        $crawler->filter('h1')
+        $crawler->filter('body')
             ->before('<a name="//apple_ref/cpp/Section/Top" class="dashAnchor"></a>');
 
         $crawler->filter('h2, h3')->each(function (HtmlPageCrawler $node) {
