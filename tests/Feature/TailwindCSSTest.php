@@ -97,12 +97,12 @@ class TailwindCSSTest extends TestCase
 
         $this->assertStringContainsString(
             $tailwindUIAlert,
-            Storage::get($this->docset->downloadedDirectory() . '/' . $this->docset->url() . '/components/buttons/index.html')
+            Storage::get($this->docset->downloadedDirectory() . '/' . $this->docset->url() . '/components/buttons.html')
         );
 
         $this->assertStringNotContainsString(
             $tailwindUIAlert,
-            Storage::get($this->docset->innerDirectory() . '/' . $this->docset->url() . '/components/buttons/index.html')
+            Storage::get($this->docset->innerDirectory() . '/' . $this->docset->url() . '/components/buttons.html')
         );
     }
 
@@ -113,12 +113,12 @@ class TailwindCSSTest extends TestCase
 
         $this->assertStringNotContainsString(
             $ignoreDarkMode,
-            Storage::get($this->docset->downloadedDirectory() . '/' . $this->docset->url() . '/docs/background-color/index.html')
+            Storage::get($this->docset->downloadedDirectory() . '/' . $this->docset->url() . '/docs/background-color.html')
         );
 
         $this->assertStringContainsString(
             $ignoreDarkMode,
-            Storage::get($this->docset->innerDirectory() . '/' . $this->docset->url() . '/docs/background-color/index.html')
+            Storage::get($this->docset->innerDirectory() . '/' . $this->docset->url() . '/docs/background-color.html')
         );
     }
 
@@ -130,7 +130,7 @@ class TailwindCSSTest extends TestCase
         );
 
         $this->assertTrue(
-            $crawler->filter('body > div:nth-child(2)')->hasClass('max-w-screen-xl')
+            $crawler->filter('#__next > div:nth-child(2)')->hasClass('max-w-screen-xl')
         );
 
 
@@ -139,7 +139,7 @@ class TailwindCSSTest extends TestCase
         );
 
         $this->assertFalse(
-            $crawler->filter('body > div:nth-child(2)')->hasClass('max-w-screen-xl')
+            $crawler->filter('#__next > div:nth-child(2)')->hasClass('max-w-screen-xl')
         );
     }
 

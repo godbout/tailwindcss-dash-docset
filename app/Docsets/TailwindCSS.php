@@ -14,18 +14,39 @@ class TailwindCSS extends BaseDocset
     public const CODE = 'tailwindcss';
     public const NAME = 'Tailwind CSS';
     public const URL = 'tailwindcss.com';
-    public const INDEX = 'docs/installation/index.html';
+    public const INDEX = 'docs/installation.html';
     public const PLAYGROUND = 'https://codesandbox.io/s/github/lbogdan/tailwindcss-playground';
     public const ICON_16 = 'favicon-16x16.png';
     public const ICON_32 = 'favicon-32x32.png';
     public const EXTERNAL_DOMAINS = [
-        'refactoring-ui.nyc3.cdn.digitaloceanspaces.com',
-        'jsdelivr.net',
-        'code.jquery.com',
-        'rsms.me',
-        'googleapis.com',
-        // 'images.unsplash.com'
     ];
+
+
+    public function grab(): bool
+    {
+        $toIgnore = implode('|', [
+            'blog.tailwindcss.com',
+        ]);
+
+        system(
+            "echo; wget tailwindcss.com/docs \
+                --mirror \
+                --trust-server-names \
+                --reject-regex='{$toIgnore}' \
+                --page-requisites \
+                --adjust-extension \
+                --convert-links \
+                --span-hosts \
+                --domains={$this->externalDomains()} \
+                --directory-prefix=storage/{$this->downloadedDirectory()} \
+                -e robots=off \
+                --quiet \
+                --show-progress",
+            $result
+        );
+
+        return $result === 0;
+    }
 
     public function entries(string $file): Collection
     {
@@ -33,12 +54,12 @@ class TailwindCSS extends BaseDocset
 
         $entries = collect();
 
-        $entries = $entries->merge($this->environmentEntries($crawler, $file));
-        $entries = $entries->merge($this->instructionEntries($crawler, $file));
-        $entries = $entries->merge($this->sampleEntries($crawler, $file));
-        $entries = $entries->merge($this->resourceEntries($crawler, $file));
-        $entries = $entries->merge($this->guideEntries($crawler, $file));
-        $entries = $entries->merge($this->sectionEntries($crawler, $file));
+        $entries = $entries->union($this->environmentEntries($crawler, $file));
+        $entries = $entries->union($this->instructionEntries($crawler, $file));
+        $entries = $entries->union($this->sampleEntries($crawler, $file));
+        $entries = $entries->union($this->resourceEntries($crawler, $file));
+        $entries = $entries->union($this->guideEntries($crawler, $file));
+        $entries = $entries->union($this->sectionEntries($crawler, $file));
 
         return $entries;
     }
@@ -47,7 +68,7 @@ class TailwindCSS extends BaseDocset
     {
         $entries = collect();
 
-        if (Str::contains($file, "{$this->url()}/community/index.html")) {
+        if (Str::contains($file, "{$this->url()}/community.html")) {
             $crawler->filter('h2')->each(function (HtmlPageCrawler $node) use ($entries, $file) {
                 $entries->push([
                     'name' => $this->cleanAnchorText($node->text()),
@@ -64,7 +85,7 @@ class TailwindCSS extends BaseDocset
     {
         $entries = collect();
 
-        if (Str::contains($file, "{$this->url()}/screencasts/index.html")) {
+        if (Str::contains($file, "{$this->url()}/screencasts.html")) {
             $crawler->filter('span.relative')->each(function (HtmlPageCrawler $node) use ($entries) {
                 $entries->push([
                     'name' => $this->cleanAnchorText($node->text()),
@@ -81,12 +102,12 @@ class TailwindCSS extends BaseDocset
     {
         $entries = collect();
 
-        if (Str::contains($file, "{$this->url()}/components/index.html")) {
+        if (Str::contains($file, "{$this->url()}/components.html")) {
             $crawler->filter('span.relative')->each(function (HtmlPageCrawler $node) use ($entries) {
                 $entries->push([
                     'name' => $this->cleanAnchorText($node->text()),
                     'type' => 'Sample',
-                    'path' => $this->url() . '/components/' . $node->parents()->first()->attr('href'),
+                    'path' => $this->url() . '/' . $node->parents()->first()->attr('href'),
                 ]);
             });
 
@@ -98,7 +119,7 @@ class TailwindCSS extends BaseDocset
     {
         $entries = collect();
 
-        if (Str::contains($file, "{$this->url()}/resources/index.html")) {
+        if (Str::contains($file, "{$this->url()}/resources.html")) {
             $crawler->filter('h2')->each(function (HtmlPageCrawler $node) use ($entries, $file) {
                 $entries->push([
                     'name' => $this->cleanAnchorText($node->text()),
@@ -161,7 +182,6 @@ class TailwindCSS extends BaseDocset
         $this->removeLeftSidebar($crawler);
         $this->removeRightSidebar($crawler);
         $this->removeTailwindUIAlert($crawler);
-        $this->removeUnwantedCSS($crawler);
         $this->removeUnwantedJavaScript($crawler);
         $this->ignoreDarkModeForSomeColors($crawler);
         $this->updateCSS($crawler);
@@ -172,7 +192,7 @@ class TailwindCSS extends BaseDocset
 
     protected function removeNavbarAndHeader(HtmlPageCrawler $crawler)
     {
-        $crawler->filter('body > div:first-child')->remove();
+        $crawler->filter('#header')->remove();
     }
 
     protected function removeLeftSidebar(HtmlPageCrawler $crawler)
@@ -187,24 +207,12 @@ class TailwindCSS extends BaseDocset
 
     protected function removeTailwindUIAlert(HtmlPageCrawler $crawler)
     {
-        $crawler->filter('body > div.transition.transform.fixed.z-100')->remove();
-    }
-
-    protected function removeUnwantedCSS(HtmlPageCrawler $crawler)
-    {
-        $crawler->filter('link[href*="docsearch.min.css"]')->remove();
+        $crawler->filter('div.transition.transform.fixed.z-100')->remove();
     }
 
     protected function removeUnwantedJavaScript(HtmlPageCrawler $crawler)
     {
-        $crawler->filter('script[src*=analytics]')->remove();
-        $crawler->filter('script[src*=docsearch]')->remove();
-        $crawler->filter('script[src*=gtag]')->remove();
-        $crawler->filterXPath("//script[text()[contains(.,'docsearch')]]")->remove();
-        $crawler->filterXPath("//script[text()[contains(.,'gtag')]]")->remove();
-        $crawler->filter('script[src*=jquery]')
-            ->removeAttribute('integrity')
-            ->removeAttribute('crossorigin');
+        $crawler->filter('script')->remove();
     }
 
     protected function ignoreDarkModeForSomeColors(HtmlPageCrawler $crawler)
@@ -223,12 +231,12 @@ class TailwindCSS extends BaseDocset
 
     protected function ignoreDarkModeForBackgroundColorTable(HtmlPageCrawler $crawler)
     {
-        $crawler->filter('h2 + div td.w-24.p-2.font-mono.text-xs')->addClass('dash-ignore-dark-mode');
+        $crawler->filter('h2 + div td.w-24')->addClass('dash-ignore-dark-mode');
     }
 
     protected function ignoreDarkModeForTextColorAndPlaceholderColorTables(HtmlPageCrawler $crawler)
     {
-        $crawler->filter('h2 + div td.relative.w-16.font-medium.border-t.text-base')->addClass('dash-ignore-dark-mode');
+        $crawler->filter('h2 + div td.w-16.font-medium')->addClass('dash-ignore-dark-mode');
     }
 
     protected function ignoreDarkModeForBorderColorTable(HtmlPageCrawler $crawler)
@@ -238,7 +246,7 @@ class TailwindCSS extends BaseDocset
 
     protected function ignoreDarkModeForDivideColorTable(HtmlPageCrawler $crawler)
     {
-        $crawler->filter('h2 + div td > div.absolute.m-2.divide-y')->addClass('dash-ignore-dark-mode');
+        $crawler->filter('h2 + div td > div.absolute.m-2')->addClass('dash-ignore-dark-mode');
     }
 
     protected function updateCSS(HtmlPageCrawler $crawler)
@@ -252,11 +260,11 @@ class TailwindCSS extends BaseDocset
     protected function updateTopPadding(HtmlPageCrawler $crawler)
     {
         $crawler->filter('#app > div')
-            ->removeClass('pt-12')
             ->removeClass('pt-24')
+            ->addClass('pt-8')
             ->removeClass('pb-16')
             ->removeClass('lg:pt-28')
-            ->removeClass('lg:pt-12')
+            ->addClass('px-4')
         ;
     }
 
@@ -274,7 +282,7 @@ class TailwindCSS extends BaseDocset
 
     protected function updateContainerWidth(HtmlPageCrawler $crawler)
     {
-        $crawler->filter('body > div:first-child')
+        $crawler->filter('#__next > div:nth-child(2)')
             ->removeClass('max-w-screen-xl');
 
         $crawler->filter('#content-wrapper')
@@ -282,7 +290,8 @@ class TailwindCSS extends BaseDocset
             ->removeClass('lg:max-h-full')
             ->removeClass('lg:overflow-visible')
             ->removeClass('lg:w-3/4')
-            ->removeClass('xl:w-4/5');
+            ->removeClass('xl:w-4/5')
+        ;
 
         $crawler->filter('#app > div > div.flex > div.markdown')
             ->removeClass('xl:p-12')
@@ -291,18 +300,19 @@ class TailwindCSS extends BaseDocset
             ->removeClass('lg:mr-auto')
             ->removeClass('xl:w-3/4')
             ->removeClass('xl:px-12')
-            ->removeClass('xl:mx-0');
+            ->removeClass('xl:mx-0')
+        ;
     }
 
     protected function updateBottomPadding(HtmlPageCrawler $crawler)
     {
         $crawler->filter('body')
-            ->addClass('pb-8');
+            ->addClass('pb-16');
     }
 
     protected function insertDashTableOfContents(HtmlPageCrawler $crawler)
     {
-        $crawler->filter('h1')
+        $crawler->filter('body')
             ->before('<a name="//apple_ref/cpp/Section/Top" class="dashAnchor"></a>');
 
         $crawler->filter('h2, h3')->each(function (HtmlPageCrawler $node) {
