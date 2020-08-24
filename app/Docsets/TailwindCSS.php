@@ -90,7 +90,7 @@ class TailwindCSS extends BaseDocset
                 $entries->push([
                     'name' => $this->cleanAnchorText($node->text()),
                     'type' => 'Instruction',
-                    'path' => $this->url() . '/docs/' . $node->parents()->first()->attr('href'),
+                    'path' => $this->url() . '/' . $node->parents()->first()->attr('href'),
                 ]);
             });
 
