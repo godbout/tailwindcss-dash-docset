@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 use Wa72\HtmlPageDom\HtmlPageCrawler;
 
-class TailwindCSSTest extends TestCase
+class UITest extends TestCase
 {
     public function setUp(): void
     {
@@ -29,17 +29,6 @@ class TailwindCSSTest extends TestCase
             fwrite(STDOUT, PHP_EOL . PHP_EOL . "\e[1;33mPackaging tailwindcss..." . PHP_EOL);
             Artisan::call('package tailwindcss');
         }
-    }
-
-    /** @test */
-    public function it_has_a_table_of_contents()
-    {
-        Config::set(
-            'database.connections.sqlite.database',
-            "storage/{$this->docset->databaseFile()}"
-        );
-
-        $this->assertNotEquals(0, DB::table('searchIndex')->count());
     }
 
     /** @test */
@@ -113,12 +102,16 @@ class TailwindCSSTest extends TestCase
 
         $this->assertStringNotContainsString(
             $ignoreDarkMode,
-            Storage::get($this->docset->downloadedDirectory() . '/' . $this->docset->url() . '/docs/background-color.html')
+            Storage::get(
+                $this->docset->downloadedDirectory() . '/' . $this->docset->url() . '/docs/background-color.html'
+            )
         );
 
         $this->assertStringContainsString(
             $ignoreDarkMode,
-            Storage::get($this->docset->innerDirectory() . '/' . $this->docset->url() . '/docs/background-color.html')
+            Storage::get(
+                $this->docset->innerDirectory() . '/' . $this->docset->url() . '/docs/background-color.html'
+            )
         );
     }
 
@@ -140,15 +133,6 @@ class TailwindCSSTest extends TestCase
 
         $this->assertFalse(
             $crawler->filter('#__next > div:nth-child(2)')->hasClass('max-w-screen-xl')
-        );
-    }
-
-    /** @test */
-    public function it_inserts_dash_anchors_in_the_doc_files()
-    {
-        $this->assertStringContainsString(
-            'name="//apple_ref/',
-            Storage::get($this->docset->innerIndex())
         );
     }
 }

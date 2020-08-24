@@ -85,7 +85,7 @@ class TailwindCSS extends BaseDocset
     {
         $entries = collect();
 
-        if (Str::contains($file, "{$this->url()}/screencasts.html")) {
+        if (Str::contains($file, "{$this->url()}/course.html")) {
             $crawler->filter('span.relative')->each(function (HtmlPageCrawler $node) use ($entries) {
                 $entries->push([
                     'name' => $this->cleanAnchorText($node->text()),
