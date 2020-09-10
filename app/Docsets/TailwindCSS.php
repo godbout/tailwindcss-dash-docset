@@ -185,6 +185,8 @@ class TailwindCSS extends BaseDocset
         $this->removeUnwantedJavaScript($crawler);
         $this->ignoreDarkModeForSomeColors($crawler);
         $this->updateCSS($crawler);
+
+        $this->insertOnlineRedirection($crawler, $file);
         $this->insertDashTableOfContents($crawler);
 
         return $crawler->saveHTML();
@@ -308,6 +310,13 @@ class TailwindCSS extends BaseDocset
     {
         $crawler->filter('body')
             ->addClass('pb-16');
+    }
+
+    protected function insertOnlineRedirection(HtmlPageCrawler $crawler, string $file)
+    {
+        $onlineUrl = Str::substr(Str::after($file, $this->innerDirectory()), 1, -5);
+
+        $crawler->filter('html')->prepend("<!-- Online page at $onlineUrl -->");
     }
 
     protected function insertDashTableOfContents(HtmlPageCrawler $crawler)
