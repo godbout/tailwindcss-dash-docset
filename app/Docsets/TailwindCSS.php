@@ -316,7 +316,7 @@ class TailwindCSS extends BaseDocset
     {
         $onlineUrl = Str::substr(Str::after($file, $this->innerDirectory()), 1, -5);
 
-        $crawler->filter('html')->prepend("<!-- Online page at $onlineUrl -->");
+        $crawler->filter('html')->prepend("<!-- Online page at https://$onlineUrl -->");
     }
 
     protected function insertDashTableOfContents(HtmlPageCrawler $crawler)
