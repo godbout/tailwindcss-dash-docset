@@ -57,6 +57,20 @@ class EntriesTest extends TestCase
     }
 
     /** @test */
+    public function the_dash_docset_has_some_entries_of_type_Sample()
+    {
+        Config::set(
+            'database.connections.sqlite.database',
+            "storage/{$this->docset->databaseFile()}"
+        );
+
+        $this->assertNotEquals(
+            0,
+            DB::table('searchIndex')->where('type', 'Sample')->count()
+        );
+    }
+
+    /** @test */
     public function it_inserts_dash_anchors_in_the_doc_files()
     {
         $this->assertStringContainsString(

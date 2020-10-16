@@ -102,12 +102,12 @@ class TailwindCSS extends BaseDocset
     {
         $entries = collect();
 
-        if (Str::contains($file, "{$this->url()}/components.html")) {
+        if (Str::contains($file, "{$this->url()}/components/")) {
             $crawler->filter('span.relative')->each(function (HtmlPageCrawler $node) use ($entries) {
                 $entries->push([
                     'name' => $this->cleanAnchorText($node->text()),
                     'type' => 'Sample',
-                    'path' => $this->url() . '/' . $node->parents()->first()->attr('href'),
+                    'path' => $this->url() . '/components/' . $node->parents()->first()->attr('href'),
                 ]);
             });
 
