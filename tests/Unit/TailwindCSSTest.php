@@ -45,7 +45,7 @@ class TailwindCSSTest extends TestCase
     /** @test */
     public function it_can_format_the_documentation_files()
     {
-        $navbar = 'id="sidebar-open"';
+        $navbar = 'id="sidebar"';
 
         $this->assertStringContainsString(
             $navbar,
