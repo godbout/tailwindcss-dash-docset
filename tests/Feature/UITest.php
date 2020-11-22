@@ -32,17 +32,17 @@ class UITest extends TestCase
     }
 
     /** @test */
-    public function the_navbar_gets_removed_from_the_dash_docset_files()
+    public function the_topbar_gets_removed_from_the_dash_docset_files()
     {
-        $navbar = 'id="sidebar-open"';
+        $topbar = 'sticky top-0';
 
         $this->assertStringContainsString(
-            $navbar,
+            $topbar,
             Storage::get($this->docset->downloadedIndex())
         );
 
         $this->assertStringNotContainsString(
-            $navbar,
+            $topbar,
             Storage::get($this->docset->innerIndex())
         );
     }
@@ -80,18 +80,60 @@ class UITest extends TestCase
     }
 
     /** @test */
-    public function the_tailwind_ui_early_access_alert_gets_removed_from_the_dash_docset_files()
+    public function the_bottom_button_to_slide_the_left_sidebar_gets_removed_from_the_dash_docset_files()
     {
-        $tailwindUIAlert = 'transition transform fixed z-100';
+        $bottomButton = 'class="fixed z-50 bottom-4 right-4';
 
         $this->assertStringContainsString(
-            $tailwindUIAlert,
-            Storage::get($this->docset->downloadedDirectory() . '/' . $this->docset->url() . '/components/buttons.html')
+            $bottomButton,
+            Storage::get($this->docset->downloadedIndex())
         );
 
         $this->assertStringNotContainsString(
-            $tailwindUIAlert,
-            Storage::get($this->docset->innerDirectory() . '/' . $this->docset->url() . '/components/buttons.html')
+            $bottomButton,
+            Storage::get($this->docset->innerIndex())
+        );
+    }
+
+    /** @test */
+    public function the_container_width_gets_updated_in_the_dash_docset_files()
+    {
+        $crawler = HtmlPageCrawler::create(
+            Storage::get($this->docset->downloadedIndex())
+        );
+
+        $this->assertFalse(
+            $crawler->filter('#content-wrapper')->hasClass('px-4')
+        );
+
+
+        $crawler = HtmlPageCrawler::create(
+            Storage::get($this->docset->innerIndex())
+        );
+
+        $this->assertTrue(
+            $crawler->filter('#content-wrapper')->hasClass('px-4')
+        );
+    }
+
+    /** @test */
+    public function the_bottom_padding_gets_updated_in_the_dash_docset_files()
+    {
+        $crawler = HtmlPageCrawler::create(
+            Storage::get($this->docset->downloadedIndex())
+        );
+
+        $this->assertTrue(
+            $crawler->filter('#content-wrapper > div')->hasClass('pb-24')
+        );
+
+
+        $crawler = HtmlPageCrawler::create(
+            Storage::get($this->docset->innerIndex())
+        );
+
+        $this->assertTrue(
+            $crawler->filter('#content-wrapper > div')->hasClass('pb-10')
         );
     }
 
@@ -112,27 +154,6 @@ class UITest extends TestCase
             Storage::get(
                 $this->docset->innerDirectory() . '/' . $this->docset->url() . '/docs/background-color.html'
             )
-        );
-    }
-
-    /** @test */
-    public function the_CSS_gets_updated_in_the_dash_docset_files()
-    {
-        $crawler = HtmlPageCrawler::create(
-            Storage::get($this->docset->downloadedIndex())
-        );
-
-        $this->assertTrue(
-            $crawler->filter('#__next > div:nth-child(2)')->hasClass('max-w-screen-xl')
-        );
-
-
-        $crawler = HtmlPageCrawler::create(
-            Storage::get($this->docset->innerIndex())
-        );
-
-        $this->assertFalse(
-            $crawler->filter('#__next > div:nth-child(2)')->hasClass('max-w-screen-xl')
         );
     }
 }

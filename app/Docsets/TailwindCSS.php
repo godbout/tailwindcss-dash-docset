@@ -6,7 +6,6 @@ use Godbout\DashDocsetBuilder\Docsets\BaseDocset;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Wa72\HtmlPageDom\HtmlPage;
 use Wa72\HtmlPageDom\HtmlPageCrawler;
 
 class TailwindCSS extends BaseDocset
@@ -176,13 +175,17 @@ class TailwindCSS extends BaseDocset
     {
         $crawler = HtmlPageCrawler::create(Storage::get($file));
 
-        $this->removeNavbarAndHeader($crawler);
+        $this->removeTopbar($crawler);
         $this->removeLeftSidebar($crawler);
         $this->removeRightSidebar($crawler);
-        $this->removeTailwindUIAlert($crawler);
-        $this->removeUnwantedJavaScript($crawler);
+        $this->removeBottomMenuButton($crawler);
+
+        $this->updateContainerWidth($crawler);
+        $this->updateBottomPadding($crawler);
+
         $this->ignoreDarkModeForSomeColors($crawler);
-        $this->updateCSS($crawler);
+
+        $this->removeUnwantedJavaScript($crawler);
 
         $this->insertOnlineRedirection($crawler, $file);
         $this->insertDashTableOfContents($crawler);
@@ -190,9 +193,9 @@ class TailwindCSS extends BaseDocset
         return $crawler->saveHTML();
     }
 
-    protected function removeNavbarAndHeader(HtmlPageCrawler $crawler)
+    protected function removeTopbar(HtmlPageCrawler $crawler)
     {
-        $crawler->filter('#header')->remove();
+        $crawler->filter('div.sticky.top-0')->remove();
     }
 
     protected function removeLeftSidebar(HtmlPageCrawler $crawler)
@@ -202,112 +205,46 @@ class TailwindCSS extends BaseDocset
 
     protected function removeRightSidebar(HtmlPageCrawler $crawler)
     {
-        $crawler->filter('#app div.flex > div.hidden')->remove();
+        $crawler->filter('#content-wrapper div.hidden.flex-none.w-64')->remove();
     }
 
-    protected function removeTailwindUIAlert(HtmlPageCrawler $crawler)
+    protected function removeBottomMenuButton(HtmlPageCrawler $crawler)
     {
-        $crawler->filter('div.transition.transform.fixed.z-100')->remove();
+        $crawler->filter('#__next > button[type=button]')->remove();
     }
 
-    protected function removeUnwantedJavaScript(HtmlPageCrawler $crawler)
+    protected function updateContainerWidth(HtmlPageCrawler $crawler)
     {
-        $crawler->filter('script')->remove();
+        $crawler->filter('#content-wrapper')->addClass('px-4');
+    }
+
+    protected function updateBottomPadding(HtmlPageCrawler $crawler)
+    {
+        $crawler->filter('#content-wrapper > div')
+            ->removeClass('pb-24')
+            ->addClass('pb-10')
+        ;
     }
 
     protected function ignoreDarkModeForSomeColors(HtmlPageCrawler $crawler)
     {
         $this->ignoreDarkModeForDefaultColorPaletteSection($crawler);
-        $this->ignoreDarkModeForBackgroundColorTable($crawler);
-        $this->ignoreDarkModeForTextColorAndPlaceholderColorTables($crawler);
-        $this->ignoreDarkModeForBorderColorTable($crawler);
-        $this->ignoreDarkModeForDivideColorTable($crawler);
+        $this->ignoreDarkModeForVariousColorTables($crawler);
     }
 
     protected function ignoreDarkModeForDefaultColorPaletteSection(HtmlPageCrawler $crawler)
     {
-        $crawler->filter('h2 ~ div div.w-12')->addClass('dash-ignore-dark-mode');
+        $crawler->filter('div.h-10.w-full.rounded.ring-1.ring-inset')->addClass('dash-ignore-dark-mode');
     }
 
-    protected function ignoreDarkModeForBackgroundColorTable(HtmlPageCrawler $crawler)
+    protected function ignoreDarkModeForVariousColorTables(HtmlPageCrawler $crawler)
     {
-        $crawler->filter('h2 + div td.w-24')->addClass('dash-ignore-dark-mode');
+        $crawler->filter('h2 + div td:last-child')->addClass('dash-ignore-dark-mode');
     }
 
-    protected function ignoreDarkModeForTextColorAndPlaceholderColorTables(HtmlPageCrawler $crawler)
+    protected function removeUnwantedJavaScript(HtmlPageCrawler $crawler)
     {
-        $crawler->filter('h2 + div td.w-16.font-medium')->addClass('dash-ignore-dark-mode');
-    }
-
-    protected function ignoreDarkModeForBorderColorTable(HtmlPageCrawler $crawler)
-    {
-        $crawler->filter('h2 + div td > div.absolute.m-2.border')->addClass('dash-ignore-dark-mode');
-    }
-
-    protected function ignoreDarkModeForDivideColorTable(HtmlPageCrawler $crawler)
-    {
-        $crawler->filter('h2 + div td > div.absolute.m-2')->addClass('dash-ignore-dark-mode');
-    }
-
-    protected function updateCSS(HtmlPageCrawler $crawler)
-    {
-        $this->updateTopPadding($crawler);
-        $this->updateHeader($crawler);
-        $this->updateContainerWidth($crawler);
-        $this->updateBottomPadding($crawler);
-    }
-
-    protected function updateTopPadding(HtmlPageCrawler $crawler)
-    {
-        $crawler->filter('#app > div')
-            ->removeClass('pt-24')
-            ->addClass('pt-8')
-            ->removeClass('pb-16')
-            ->removeClass('lg:pt-28')
-            ->addClass('px-4')
-        ;
-    }
-
-    protected function updateHeader(HtmlPageCrawler $crawler)
-    {
-        $crawler->filter('#app > div > div.markdown')
-            ->removeClass('lg:ml-0')
-            ->removeClass('lg:mr-auto')
-            ->removeClass('xl:mx-0')
-            ->removeClass('xl:w-3/4')
-            ->removeClass('max-w-3xl')
-            ->removeClass('xl:px-12')
-        ;
-    }
-
-    protected function updateContainerWidth(HtmlPageCrawler $crawler)
-    {
-        $crawler->filter('#__next > div:nth-child(2)')
-            ->removeClass('max-w-screen-xl');
-
-        $crawler->filter('#content-wrapper')
-            ->removeClass('lg:static')
-            ->removeClass('lg:max-h-full')
-            ->removeClass('lg:overflow-visible')
-            ->removeClass('lg:w-3/4')
-            ->removeClass('xl:w-4/5')
-        ;
-
-        $crawler->filter('#app > div > div.flex > div.markdown')
-            ->removeClass('xl:p-12')
-            ->removeClass('max-w-3xl')
-            ->removeClass('lg:ml-0')
-            ->removeClass('lg:mr-auto')
-            ->removeClass('xl:w-3/4')
-            ->removeClass('xl:px-12')
-            ->removeClass('xl:mx-0')
-        ;
-    }
-
-    protected function updateBottomPadding(HtmlPageCrawler $crawler)
-    {
-        $crawler->filter('body')
-            ->addClass('pb-16');
+        $crawler->filter('script')->remove();
     }
 
     protected function insertOnlineRedirection(HtmlPageCrawler $crawler, string $file)
