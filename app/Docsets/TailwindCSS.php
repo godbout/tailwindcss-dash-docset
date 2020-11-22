@@ -145,11 +145,13 @@ class TailwindCSS extends BaseDocset
 
         if (Str::contains($file, "{$this->url()}/docs.html")) {
             $crawler->filter('nav#nav li.mt-8 a')->each(function (HtmlPageCrawler $node) use ($entries) {
-                $entries->push([
-                    'name' => trim($node->text()),
-                    'type' => 'Guide',
-                    'path' => $this->url() . '/' . $node->attr('href'),
-                ]);
+                if (! Str::contains($node->text(), 'Release Notes')) {
+                    $entries->push([
+                        'name' => trim($node->text()),
+                        'type' => 'Guide',
+                        'path' => $this->url() . '/' . $node->attr('href'),
+                    ]);
+                }
             });
         }
 
@@ -188,7 +190,7 @@ class TailwindCSS extends BaseDocset
         $this->removeUnwantedJavaScript($crawler);
 
         $this->insertOnlineRedirection($crawler, $file);
-        $this->insertDashTableOfContents($crawler);
+        $this->insertDashTableOfContents($crawler, $file);
 
         return $crawler->saveHTML();
     }
@@ -254,16 +256,18 @@ class TailwindCSS extends BaseDocset
         $crawler->filter('html')->prepend("<!-- Online page at https://$onlineUrl -->");
     }
 
-    protected function insertDashTableOfContents(HtmlPageCrawler $crawler)
+    protected function insertDashTableOfContents(HtmlPageCrawler $crawler, string $file)
     {
-        $crawler->filter('body')
-            ->before('<a name="//apple_ref/cpp/Section/Top" class="dashAnchor"></a>');
+        if (! Str::contains($file, "{$this->url()}/docs.html")) {
+            $crawler->filter('body')
+                ->before('<a name="//apple_ref/cpp/Section/Top" class="dashAnchor"></a>');
 
-        $crawler->filter('h2, h3')->each(function (HtmlPageCrawler $node) {
-            $node->prepend(
-                '<a id="' . Str::slug($node->text()) . '" name="//apple_ref/cpp/Section/' . rawurlencode($this->cleanAnchorText($node->text())) . '" class="dashAnchor"></a>'
-            );
-        });
+            $crawler->filter('h2, h3')->each(function (HtmlPageCrawler $node) {
+                $node->prepend(
+                    '<a id="' . Str::slug($node->text()) . '" name="//apple_ref/cpp/Section/' . rawurlencode($this->cleanAnchorText($node->text())) . '" class="dashAnchor"></a>'
+                );
+            });
+        }
     }
 
     protected function cleanAnchorText($anchorText)
