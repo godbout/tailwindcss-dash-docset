@@ -142,12 +142,10 @@ class TailwindCSS extends BaseDocset
 
     protected function guideEntries(HtmlPageCrawler $crawler, string $file)
     {
-        $pageTitle = (new HtmlPage(Storage::get($file)))->getTitle();
-
         $entries = collect();
 
-        if ($pageTitle === 'Tailwind CSS - A Utility-First CSS Framework for Rapidly Building Custom Designs') {
-            $crawler->filter('#navWrapper li a')->each(function (HtmlPageCrawler $node) use ($entries) {
+        if (Str::contains($file, "{$this->url()}/docs.html")) {
+            $crawler->filter('nav#nav li.mt-8 a')->each(function (HtmlPageCrawler $node) use ($entries) {
                 $entries->push([
                     'name' => trim($node->text()),
                     'type' => 'Guide',

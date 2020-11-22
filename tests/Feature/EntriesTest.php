@@ -43,6 +43,20 @@ class EntriesTest extends TestCase
     }
 
     /** @test */
+    public function the_dash_docset_has_some_entries_of_type_Guide()
+    {
+        Config::set(
+            'database.connections.sqlite.database',
+            "storage/{$this->docset->databaseFile()}"
+        );
+
+        $this->assertNotEquals(
+            0,
+            DB::table('searchIndex')->where('type', 'Guide')->count()
+        );
+    }
+
+    /** @test */
     public function the_dash_docset_has_some_entries_of_type_Instruction()
     {
         Config::set(
