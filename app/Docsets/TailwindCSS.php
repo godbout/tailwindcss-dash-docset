@@ -54,7 +54,6 @@ class TailwindCSS extends BaseDocset
         $entries = collect();
 
         $entries = $entries->union($this->environmentEntries($crawler, $file));
-        $entries = $entries->union($this->instructionEntries($crawler, $file));
         $entries = $entries->union($this->resourceEntries($crawler, $file));
         $entries = $entries->union($this->guideEntries($crawler, $file));
         $entries = $entries->union($this->sectionEntries($crawler, $file));
@@ -72,23 +71,6 @@ class TailwindCSS extends BaseDocset
                     'name' => $this->cleanAnchorText($node->text()),
                     'type' => 'Environment',
                     'path' => Str::after($file . '#' . Str::slug($node->text()), $this->innerDirectory()),
-                ]);
-            });
-
-            return $entries;
-        }
-    }
-
-    protected function instructionEntries(HtmlPageCrawler $crawler, string $file)
-    {
-        $entries = collect();
-
-        if (Str::contains($file, "{$this->url()}/course.html")) {
-            $crawler->filter('span.relative')->each(function (HtmlPageCrawler $node) use ($entries) {
-                $entries->push([
-                    'name' => $this->cleanAnchorText($node->text()),
-                    'type' => 'Instruction',
-                    'path' => $this->url() . '/' . $node->parents()->first()->attr('href'),
                 ]);
             });
 
