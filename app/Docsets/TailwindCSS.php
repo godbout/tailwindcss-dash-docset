@@ -53,29 +53,11 @@ class TailwindCSS extends BaseDocset
 
         $entries = collect();
 
-        $entries = $entries->union($this->environmentEntries($crawler, $file));
         $entries = $entries->union($this->resourceEntries($crawler, $file));
         $entries = $entries->union($this->guideEntries($crawler, $file));
         $entries = $entries->union($this->sectionEntries($crawler, $file));
 
         return $entries;
-    }
-
-    protected function environmentEntries(HtmlPageCrawler $crawler, string $file)
-    {
-        $entries = collect();
-
-        if (Str::contains($file, "{$this->url()}/community.html")) {
-            $crawler->filter('h2')->each(function (HtmlPageCrawler $node) use ($entries, $file) {
-                $entries->push([
-                    'name' => $this->cleanAnchorText($node->text()),
-                    'type' => 'Environment',
-                    'path' => Str::after($file . '#' . Str::slug($node->text()), $this->innerDirectory()),
-                ]);
-            });
-
-            return $entries;
-        }
     }
 
     protected function resourceEntries(HtmlPageCrawler $crawler, string $file)
