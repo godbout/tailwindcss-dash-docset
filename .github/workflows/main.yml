@@ -15,12 +15,14 @@ jobs:
     strategy:
       matrix:
         os: [macos-latest, ubuntu-latest]
-        php: [7.4, 7.3]
+        php: [8.0, 7.4]
         dependency-version: [prefer-lowest, prefer-stable]
 
     steps:
       - name: checkout code
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
 
       - name: setup PHP
         uses: shivammathur/setup-php@v2
@@ -44,6 +46,4 @@ jobs:
         run: composer test -- --coverage-clover=coverage.clover
 
       - name: upload code coverage
-        run: |
-          wget https://scrutinizer-ci.com/ocular.phar
-          php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+        run: php vendor/bin/ocular code-coverage:upload --format=php-clover coverage.clover

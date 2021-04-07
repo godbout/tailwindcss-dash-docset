@@ -32,6 +32,22 @@ class UITest extends TestCase
     }
 
     /** @test */
+    public function the_announcement_bar_gets_removed_from_the_dash_docset_files()
+    {
+        $announcementBar = 'py-2 bg-gradient-to-r from-indigo-600 to-light-blue-500 overflow-hidden';
+
+        $this->assertStringContainsString(
+            $announcementBar,
+            Storage::get($this->docset->downloadedIndex())
+        );
+
+        $this->assertStringNotContainsString(
+            $announcementBar,
+            Storage::get($this->docset->innerIndex())
+        );
+    }
+
+    /** @test */
     public function the_topbar_gets_removed_from_the_dash_docset_files()
     {
         $topbar = 'sticky top-0';
@@ -124,7 +140,7 @@ class UITest extends TestCase
         );
 
         $this->assertTrue(
-            $crawler->filter('#content-wrapper > div')->hasClass('pb-24')
+            $crawler->filter('#content-wrapper > div > div')->hasClass('pb-24')
         );
 
 
@@ -133,7 +149,7 @@ class UITest extends TestCase
         );
 
         $this->assertTrue(
-            $crawler->filter('#content-wrapper > div')->hasClass('pb-10')
+            $crawler->filter('#content-wrapper > div > div')->hasClass('pb-10')
         );
     }
 
