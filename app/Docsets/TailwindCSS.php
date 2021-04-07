@@ -90,15 +90,19 @@ class TailwindCSS extends BaseDocset
         $entries = collect();
 
         if (Str::contains($file, "{$this->url()}/docs.html")) {
-            $crawler->filter('nav#nav li.mt-8 a')->each(function (HtmlPageCrawler $node) use ($entries) {
-                if (! Str::contains($node->text(), 'Release Notes')) {
-                    $entries->push([
-                        'name' => trim($node->text()),
-                        'type' => 'Guide',
-                        'path' => $this->url() . '/' . $node->attr('href'),
-                    ]);
-                }
-            });
+            $itemsToIgnore = collect(['Release Notes', 'Typography', 'Forms', 'Aspect Ratio', 'Line Clamp']);
+
+            $crawler
+                ->filter('nav#nav li.mt-8 a')
+                ->each(function (HtmlPageCrawler $node) use ($entries, $itemsToIgnore) {
+                    if (! $itemsToIgnore->contains($node->text())) {
+                        $entries->push([
+                            'name' => trim($node->text()),
+                            'type' => 'Guide',
+                            'path' => $this->url() . '/' . $node->attr('href'),
+                        ]);
+                    }
+                });
         }
 
         return $entries;
