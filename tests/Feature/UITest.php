@@ -124,7 +124,7 @@ class UITest extends TestCase
         );
 
         $this->assertTrue(
-            $crawler->filter('#content-wrapper > div')->hasClass('pb-24')
+            $crawler->filter('#content-wrapper > div > div')->hasClass('pb-24')
         );
 
 
@@ -133,7 +133,7 @@ class UITest extends TestCase
         );
 
         $this->assertTrue(
-            $crawler->filter('#content-wrapper > div')->hasClass('pb-10')
+            $crawler->filter('#content-wrapper > div > div')->hasClass('pb-10')
         );
     }
 

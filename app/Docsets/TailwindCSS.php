@@ -168,7 +168,7 @@ class TailwindCSS extends BaseDocset
 
     protected function updateBottomPadding(HtmlPageCrawler $crawler)
     {
-        $crawler->filter('#content-wrapper > div')
+        $crawler->filter('#content-wrapper > div > div')
             ->removeClass('pb-24')
             ->addClass('pb-10')
         ;
