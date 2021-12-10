@@ -25,6 +25,8 @@ class TailwindCSS extends BaseDocset
     {
         $toIgnore = implode('|', [
             'blog.tailwindcss.com',
+            'v1.tailwindcss.com',
+            'v2.tailwindcss.com'
         ]);
 
         system(
