@@ -50,7 +50,7 @@ class UITest extends TestCase
     /** @test */
     public function the_left_sidebar_gets_removed_from_the_dash_docset_files()
     {
-        $leftSidebar = 'id="sidebar"';
+        $leftSidebar = '<div class="hidden lg:block fixed z-20 inset-0 top-';
 
         $this->assertStringContainsString(
             $leftSidebar,
