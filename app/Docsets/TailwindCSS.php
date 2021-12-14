@@ -160,7 +160,7 @@ class TailwindCSS extends BaseDocset
 
     protected function removeLeftSidebar(HtmlPageCrawler $crawler)
     {
-        $crawler->filter('#sidebar')->remove();
+        $crawler->filter('div.hidden.fixed.z-20.inset-0.py-10.px-8.overflow-y-auto')->remove();
     }
 
     protected function removeRightSidebar(HtmlPageCrawler $crawler)
