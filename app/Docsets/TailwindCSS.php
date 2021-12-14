@@ -165,12 +165,7 @@ class TailwindCSS extends BaseDocset
 
     protected function removeRightSidebar(HtmlPageCrawler $crawler)
     {
-        $crawler->filter('#content-wrapper div.hidden.flex-none.w-64')->remove();
-    }
-
-    protected function removeBottomMenuButton(HtmlPageCrawler $crawler)
-    {
-        $crawler->filter('#__next > button[type=button]')->remove();
+        $crawler->filter('div.fixed.z-20.bottom-0.py-10.px-8.overflow-y-auto.hidden')->remove();
     }
 
     protected function updateContainerWidth(HtmlPageCrawler $crawler)
