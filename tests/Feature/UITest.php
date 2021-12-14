@@ -66,31 +66,17 @@ class UITest extends TestCase
     /** @test */
     public function the_right_sidebar_gets_removed_from_the_dash_docset_files()
     {
-        $rightSidebar = 'hidden xl:text-sm';
+        $rightSidebar = '<div class="fixed z-20 top-';
 
         $this->assertStringContainsString(
             $rightSidebar,
-            Storage::get($this->docset->downloadedIndex())
+            Storage::get(
+                $this->docset->downloadedDirectory() . '/' . $this->docset->url() . '/docs/background-color.html'
+            )
         );
 
         $this->assertStringNotContainsString(
             $rightSidebar,
-            Storage::get($this->docset->innerIndex())
-        );
-    }
-
-    /** @test */
-    public function the_bottom_button_to_slide_the_left_sidebar_gets_removed_from_the_dash_docset_files()
-    {
-        $bottomButton = 'class="fixed z-50 bottom-4 right-4';
-
-        $this->assertStringContainsString(
-            $bottomButton,
-            Storage::get($this->docset->downloadedIndex())
-        );
-
-        $this->assertStringNotContainsString(
-            $bottomButton,
             Storage::get($this->docset->innerIndex())
         );
     }
