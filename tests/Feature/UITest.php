@@ -85,20 +85,24 @@ class UITest extends TestCase
     public function the_container_width_gets_updated_in_the_dash_docset_files()
     {
         $crawler = HtmlPageCrawler::create(
-            Storage::get($this->docset->downloadedIndex())
+            Storage::get(
+                $this->docset->downloadedDirectory() . '/' . $this->docset->url() . '/docs/background-color.html'
+            )
         );
 
-        $this->assertFalse(
-            $crawler->filter('#content-wrapper')->hasClass('px-4')
+        $this->assertTrue(
+            $crawler->filter('div.max-w-3xl.mx-auto.pt-10')->hasClass('mx-auto')
         );
 
 
         $crawler = HtmlPageCrawler::create(
-            Storage::get($this->docset->innerIndex())
+            Storage::get(
+                $this->docset->innerDirectory() . '/' . $this->docset->url() . '/docs/background-color.html'
+            )
         );
 
-        $this->assertTrue(
-            $crawler->filter('#content-wrapper')->hasClass('px-4')
+        $this->assertFalse(
+            $crawler->filter('div.max-w-3xl.mx-auto.pt-10')->hasClass('mx-auto')
         );
     }
 
