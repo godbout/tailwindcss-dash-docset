@@ -129,14 +129,12 @@ class TailwindCSS extends BaseDocset
     {
         $crawler = HtmlPageCrawler::create(Storage::get($file));
 
-        $this->removeAnnouncementBar($crawler);
         $this->removeTopbar($crawler);
         $this->removeLeftSidebar($crawler);
         $this->removeRightSidebar($crawler);
-        $this->removeBottomMenuButton($crawler);
 
         $this->updateContainerWidth($crawler);
-        $this->updateBottomPadding($crawler);
+        $this->removeFooter($crawler);
 
         $this->ignoreDarkModeForSomeColors($crawler);
 
@@ -146,11 +144,6 @@ class TailwindCSS extends BaseDocset
         $this->insertDashTableOfContents($crawler, $file);
 
         return $crawler->saveHTML();
-    }
-
-    protected function removeAnnouncementBar(HtmlPageCrawler $crawler)
-    {
-        $crawler->filter('#__next > div.from-indigo-600.to-light-blue-500')->remove();
     }
 
     protected function removeTopbar(HtmlPageCrawler $crawler)
@@ -182,11 +175,10 @@ class TailwindCSS extends BaseDocset
         ;
     }
 
-    protected function updateBottomPadding(HtmlPageCrawler $crawler)
+    protected function removeFooter(HtmlPageCrawler $crawler)
     {
-        $crawler->filter('#content-wrapper > div > div')
-            ->removeClass('pb-24')
-            ->addClass('pb-10')
+        $crawler->filter('div.pt-10.pb-28.border-t.border-gray-200.justify-between.text-gray-500')
+            ->remove()
         ;
     }
 

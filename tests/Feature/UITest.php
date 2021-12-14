@@ -107,23 +107,18 @@ class UITest extends TestCase
     }
 
     /** @test */
-    public function the_bottom_padding_gets_updated_in_the_dash_docset_files()
+    public function the_footer_gets_removed_from_the_dash_docset_files()
     {
-        $crawler = HtmlPageCrawler::create(
+        $footer = '<div class="pt-10 pb-28 border-t border-gray-200';
+
+        $this->assertStringContainsString(
+            $footer,
             Storage::get($this->docset->downloadedIndex())
         );
 
-        $this->assertTrue(
-            $crawler->filter('#content-wrapper > div > div')->hasClass('pb-24')
-        );
-
-
-        $crawler = HtmlPageCrawler::create(
+        $this->assertStringNotContainsString(
+            $footer,
             Storage::get($this->docset->innerIndex())
-        );
-
-        $this->assertTrue(
-            $crawler->filter('#content-wrapper > div > div')->hasClass('pb-10')
         );
     }
 
