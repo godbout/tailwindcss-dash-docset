@@ -38,7 +38,7 @@ class TailwindCSSTest extends TestCase
     /** @test */
     public function it_can_format_the_documentation_files()
     {
-        $navbar = 'id="sidebar"';
+        $navbar = 'py-4 border-b border-gray-900/10 lg:px-8 lg:border-0 mx-4 lg:mx-0';
 
         $this->assertStringContainsString(
             $navbar,
