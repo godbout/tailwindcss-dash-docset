@@ -170,7 +170,16 @@ class TailwindCSS extends BaseDocset
 
     protected function updateContainerWidth(HtmlPageCrawler $crawler)
     {
-        $crawler->filter('#content-wrapper')->addClass('px-4');
+        $crawler->filter('div.max-w-8xl.mx-auto.px-4 > div:first-child')
+            ->removeClass('lg:pl-[19.5rem]')
+        ;
+        $crawler->filter('div.max-w-3xl.mx-auto.pt-10')
+            ->removeClass('max-w-3xl')
+            ->removeClass('mx-auto')
+            ->removeClass('xl:max-w-none')
+            ->removeClass('xl:mr-[15.5rem]')
+            ->removeClass('xl:pr-16')
+        ;
     }
 
     protected function updateBottomPadding(HtmlPageCrawler $crawler)
