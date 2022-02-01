@@ -109,7 +109,7 @@ class UITest extends TestCase
     /** @test */
     public function the_footer_gets_removed_from_the_dash_docset_files()
     {
-        $footer = '<div class="pt-10 pb-28 border-t border-gray-200';
+        $footer = '<div class="pt-10 pb-28 border-t';
 
         $this->assertStringContainsString(
             $footer,
