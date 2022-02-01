@@ -137,6 +137,7 @@ class TailwindCSS extends BaseDocset
         $this->updateContainerWidth($crawler);
         $this->removeFooter($crawler);
 
+        $this->removeDarkModeInHTMLTag($crawler);
         $this->ignoreDarkModeForSomeColors($crawler);
 
         $this->removeUnwantedJavaScript($crawler);
@@ -193,6 +194,13 @@ class TailwindCSS extends BaseDocset
     {
         $crawler->filter('footer div.pt-10.pb-28.border-t.justify-between')
             ->remove()
+        ;
+    }
+
+    protected function removeDarkModeInHTMLTag(HtmlPageCrawler $crawler)
+    {
+        $crawler->filter('html')
+            ->removeClass('dark')
         ;
     }
 
