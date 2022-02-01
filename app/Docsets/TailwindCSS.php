@@ -191,7 +191,7 @@ class TailwindCSS extends BaseDocset
 
     protected function removeFooter(HtmlPageCrawler $crawler)
     {
-        $crawler->filter('div.pt-10.pb-28.border-t.border-gray-200.justify-between.text-gray-500')
+        $crawler->filter('footer div.pt-10.pb-28.border-t.justify-between')
             ->remove()
         ;
     }
