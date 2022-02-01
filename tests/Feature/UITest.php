@@ -141,4 +141,24 @@ class UITest extends TestCase
             )
         );
     }
+
+    /** @test */
+    public function the_whole_list_of_classes_is_visible_even_on_small_screens()
+    {
+        $overflow = '<div class="overflow-hidden lg:overflow-auto';
+
+        $this->assertStringContainsString(
+            $overflow,
+            Storage::get(
+                $this->docset->downloadedDirectory() . '/' . $this->docset->url() . '/docs/background-color.html'
+            )
+        );
+
+        $this->assertStringNotContainsString(
+            $overflow,
+            Storage::get(
+                $this->docset->innerDirectory() . '/' . $this->docset->url() . '/docs/background-color.html'
+            )
+        );
+    }
 }
