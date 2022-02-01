@@ -161,4 +161,24 @@ class UITest extends TestCase
             )
         );
     }
+
+    /** @test */
+    public function the_weird_dark_mode_in_the_html_tag_that_makes_Dash_bug_gets_removed()
+    {
+        $darkMode = 'dark [--scroll-mt:9.875rem] lg:[--scroll-mt:6.3125rem]';
+
+        $this->assertStringContainsString(
+            $darkMode,
+            Storage::get(
+                $this->docset->downloadedDirectory() . '/' . $this->docset->url() . '/docs/background-color.html'
+            )
+        );
+
+        $this->assertStringNotContainsString(
+            $darkMode,
+            Storage::get(
+                $this->docset->innerDirectory() . '/' . $this->docset->url() . '/docs/background-color.html'
+            )
+        );
+    }
 }
