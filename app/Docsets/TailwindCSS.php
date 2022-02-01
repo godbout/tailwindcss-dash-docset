@@ -132,6 +132,7 @@ class TailwindCSS extends BaseDocset
         $this->removeTopbar($crawler);
         $this->removeLeftSidebar($crawler);
         $this->removeRightSidebar($crawler);
+        $this->removeClassesOverflow($crawler);
 
         $this->updateContainerWidth($crawler);
         $this->removeFooter($crawler);
@@ -159,6 +160,19 @@ class TailwindCSS extends BaseDocset
     protected function removeRightSidebar(HtmlPageCrawler $crawler)
     {
         $crawler->filter('div.fixed.z-20.bottom-0.py-10.px-8.overflow-y-auto.hidden')->remove();
+    }
+
+    protected function removeClassesOverflow(HtmlPageCrawler $crawler)
+    {
+        $crawler->filter('#class-reference + div')
+            ->removeClass('overflow-hidden')
+            ->removeClass('lg:overflow-auto')
+            ->addClass('overflow-auto')
+        ;
+
+        $crawler->filter('#class-reference ~ div:nth-of-type(2)')
+            ->remove()
+        ;
     }
 
     protected function updateContainerWidth(HtmlPageCrawler $crawler)
