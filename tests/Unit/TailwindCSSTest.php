@@ -38,15 +38,15 @@ class TailwindCSSTest extends TestCase
     /** @test */
     public function it_can_format_the_documentation_files()
     {
-        $navbar = 'py-4 border-b border-gray-900/10 lg:px-8 lg:border-0 mx-4 lg:mx-0';
+        $topbar = 'sticky top-0';
 
         $this->assertStringContainsString(
-            $navbar,
+            $topbar,
             Storage::get($this->docset->downloadedIndex())
         );
 
         $this->assertStringNotContainsString(
-            $navbar,
+            $topbar,
             $this->docset->format($this->docset->downloadedIndex())
         );
     }
