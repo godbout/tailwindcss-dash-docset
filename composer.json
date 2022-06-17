@@ -35,7 +35,7 @@
         }
     },
     "require-dev": {
-        "codedungeon/phpunit-result-printer": "^0.30",
+        "codedungeon/phpunit-result-printer": "^0.32",
         "mockery/mockery": "^1.4",
         "phpunit/phpunit": "^9.5",
         "scrutinizer/ocular": "^1.8"
