@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8d30bfa9eb15266936fc58302c8f4332",
+    "content-hash": "e8a1cb5d7b3a00c5ca3701b87272f9f4",
     "packages": [
         {
             "name": "brick/math",
@@ -4305,22 +4305,22 @@
         },
         {
             "name": "codedungeon/phpunit-result-printer",
-            "version": "0.30.1",
+            "version": "0.32.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mikeerickson/phpunit-pretty-result-printer.git",
-                "reference": "a361009eeb7078c1478ba835976f7722a4952870"
+                "reference": "102d1c145d1b3ac80a797ad9495937a332fb820c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mikeerickson/phpunit-pretty-result-printer/zipball/a361009eeb7078c1478ba835976f7722a4952870",
-                "reference": "a361009eeb7078c1478ba835976f7722a4952870",
+                "url": "https://api.github.com/repos/mikeerickson/phpunit-pretty-result-printer/zipball/102d1c145d1b3ac80a797ad9495937a332fb820c",
+                "reference": "102d1c145d1b3ac80a797ad9495937a332fb820c",
                 "shasum": ""
             },
             "require": {
                 "2bj/phanybar": "^1.0",
                 "codedungeon/php-cli-colors": "^1.10.2",
-                "hassankhan/config": "^0.11.2|^1.0|^2.0",
+                "hassankhan/config": "^0.11.2|^1.0|^2.0|^3.0",
                 "php": "^7.1 | ^8.0",
                 "symfony/yaml": "^2.7|^3.0|^4.0|^5.0"
             },
@@ -4355,9 +4355,19 @@
             ],
             "support": {
                 "issues": "https://github.com/mikeerickson/phpunit-pretty-result-printer/issues",
-                "source": "https://github.com/mikeerickson/phpunit-pretty-result-printer/tree/0.30.1"
+                "source": "https://github.com/mikeerickson/phpunit-pretty-result-printer/tree/0.32.0"
             },
-            "time": "2020-12-24T20:19:03+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/feross",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/standard",
+                    "type": "github"
+                }
+            ],
+            "time": "2022-02-25T16:52:26+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -4953,26 +4963,27 @@
         },
         {
             "name": "hassankhan/config",
-            "version": "2.2.0",
+            "version": "3.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hassankhan/config.git",
-                "reference": "62b0fd17540136efa94ab6b39f04044c6dc5e4a7"
+                "reference": "82421bb17d21cb0c10b98b89ea54aa4027adfc3f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hassankhan/config/zipball/62b0fd17540136efa94ab6b39f04044c6dc5e4a7",
-                "reference": "62b0fd17540136efa94ab6b39f04044c6dc5e4a7",
+                "url": "https://api.github.com/repos/hassankhan/config/zipball/82421bb17d21cb0c10b98b89ea54aa4027adfc3f",
+                "reference": "82421bb17d21cb0c10b98b89ea54aa4027adfc3f",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.5.9"
             },
             "require-dev": {
-                "phpunit/phpunit": "~4.8.36 || ~5.7 || ~6.5 || ~7.5",
+                "phpunit/phpunit": "~4.8.36 || ~5.7 || ~6.5 || ~7.5 || ~8.5",
                 "scrutinizer/ocular": "~1.1",
                 "squizlabs/php_codesniffer": "~2.2",
-                "symfony/yaml": "~3.4"
+                "symfony/yaml": "~3.4",
+                "yoast/phpunit-polyfills": "^1.0"
             },
             "suggest": {
                 "symfony/yaml": "~3.4"
@@ -5009,9 +5020,9 @@
             ],
             "support": {
                 "issues": "https://github.com/hassankhan/config/issues",
-                "source": "https://github.com/hassankhan/config/tree/2.2.0"
+                "source": "https://github.com/hassankhan/config/tree/3.0.1"
             },
-            "time": "2020-12-07T16:04:15+00:00"
+            "time": "2022-03-26T19:37:50+00:00"
         },
         {
             "name": "jms/metadata",
