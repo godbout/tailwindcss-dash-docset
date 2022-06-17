@@ -135,7 +135,7 @@ class TailwindCSS extends BaseDocset
         $this->removeClassesOverflow($crawler);
 
         $this->updateContainerWidth($crawler);
-        $this->removeFooter($crawler);
+        $this->tweakFooter($crawler);
 
         $this->removeDarkModeInHTMLTag($crawler);
         $this->ignoreDarkModeForSomeColors($crawler);
@@ -190,9 +190,14 @@ class TailwindCSS extends BaseDocset
         ;
     }
 
-    protected function removeFooter(HtmlPageCrawler $crawler)
+    protected function tweakFooter(HtmlPageCrawler $crawler)
     {
-        $crawler->filter('footer div.pt-10.pb-28.border-t.justify-between')
+        $crawler->filter('footer div:first-child')
+            ->removeClass('mb-10')
+            ->addClass('pb-10')
+        ;
+
+        $crawler->filter('footer div:last-child')
             ->remove()
         ;
     }

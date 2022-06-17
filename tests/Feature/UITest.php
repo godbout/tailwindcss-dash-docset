@@ -107,18 +107,39 @@ class UITest extends TestCase
     }
 
     /** @test */
-    public function the_footer_gets_removed_from_the_dash_docset_files()
+    public function the_footer_gets_tweaked()
     {
-        $footer = '<div class="pt-10 pb-28 border-t';
+        $firstDivOfFooter = 'flex items-center dark:text-slate-200 pb-10';
+
+        $this->assertStringNotContainsString(
+            $firstDivOfFooter,
+            storage::get(
+                $this->docset->downloadedDirectory() . '/' . $this->docset->url() . '/docs/background-color.html'
+            )
+        );
 
         $this->assertStringContainsString(
-            $footer,
-            Storage::get($this->docset->downloadedIndex())
+            $firstDivOfFooter,
+            storage::get(
+                $this->docset->innerDirectory() . '/' . $this->docset->url() . '/docs/background-color.html'
+            )
+        );
+
+
+        $lastDivOfFooter = '<div class="pt-10 pb-28 border-t';
+
+        $this->assertStringContainsString(
+            $lastDivOfFooter,
+            storage::get(
+                $this->docset->downloadedDirectory() . '/' . $this->docset->url() . '/docs/background-color.html'
+            )
         );
 
         $this->assertStringNotContainsString(
-            $footer,
-            Storage::get($this->docset->innerIndex())
+            $lastDivOfFooter,
+            storage::get(
+                $this->docset->innerDirectory() . '/' . $this->docset->url() . '/docs/background-color.html'
+            )
         );
     }
 
