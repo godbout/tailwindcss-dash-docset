@@ -1,3 +1,7 @@
+taken over by [knu](https://github.com/knu/docset-tailwindcss)!
+
+___
+
 <h1 align="center">TailwindCSS Dash Docset</h1>
 
 <p align="center">
